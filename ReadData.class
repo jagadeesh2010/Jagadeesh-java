@@ -1,0 +1,45 @@
+package com.test;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "skills")
+public class Skills {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	
+	private String s_name;
+	
+	private int s_rating;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getS_name() {
+		return s_name;
+	}
+
+	public void setS_name(String s_name) {
+		this.s_name = s_name;
+	}
+
+	public int getS_rating() {
+		return s_rating;
+	}
+
+	public void setS_rating(int s_rating) {
+		this.s_rating = s_rating;
+	}
+	
+}

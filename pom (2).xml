@@ -1,0 +1,94 @@
+package com.test;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import jakarta.persistence.TypedQuery;
+
+public class ReadData {
+	
+	public static void main(String[] args) {
+		
+		Configuration cfg = new Configuration();
+		
+		cfg.configure("hibernate.cfg.xml");
+		
+		SessionFactory sf = cfg.buildSessionFactory();//SECOND LEVEL CACHE
+		
+		Session session = sf.openSession();//FIRST LEVEL CACHE DEFAULT 
+		
+		/*
+		 * JBoss cache
+		 * EH(EASY HIBERNATE)CACHE
+		 * OS Cache
+		 * Swarn cache
+		 */
+		
+		Transaction t = session.beginTransaction();
+		//HQL
+		Query query = session.createQuery("select min(s_rating) from Skills");
+		
+		List<Integer> sum = query.list();
+		
+		System.out.println(sum.get(0));
+		
+		
+		/*
+		Query query = session.createQuery("select sum(s_rating) from Skills");
+		
+		List<Integer> sum = query.list();
+		
+		System.out.println(sum.get(0));
+		
+		
+		Query query = session.createQuery("delete from Student where id=202");
+		
+		int x = query.executeUpdate();
+		
+		System.out.println(x);
+		
+		
+		Query query = session.createQuery("update Student set std_name=:name where id=:i");
+		
+		query.setParameter("name", "KL");
+		query.setParameter("i", 102);
+		
+		int x = query.executeUpdate();
+		
+		t.commit();
+		
+		System.out.println(x);
+		
+		
+		Query<Student> tq = session.createQuery("from Student");
+		
+		tq.setFirstResult(1);
+		tq.setMaxResults(5);
+		
+		List<Student> data = tq.getResultList();
+		
+		for(Student st : data)
+		{
+			System.out.print("ID : "+st.getId()+" Name : "
+		+st.getStd_name()+" College : "+st.getStd_college());
+			
+			System.out.println();
+			
+			List<Skills> skl = st.getSkills();
+			
+			for(Skills s : skl)
+			{
+				System.out.println("Skill Name : "
+			+s.getS_name()+" Rating : "+s.getS_rating());
+			}
+			
+		}
+		*/
+		session.close();
+	}
+}

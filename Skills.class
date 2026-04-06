@@ -1,0 +1,66 @@
+package com.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+
+
+public class StoreData {
+	
+	public static void main(String[] args) {
+		
+		Configuration cfg = new Configuration();
+		
+		cfg.configure("hibernate.cfg.xml");
+		
+		SessionFactory sf = cfg.buildSessionFactory();
+		
+		Session session = sf.openSession();
+		
+		Transaction t = session.beginTransaction();
+		
+		Skills s1 = new Skills();
+		
+		s1.setS_name("Java Core");
+		s1.setS_rating(4);
+		
+		Skills s2 = new Skills();
+		
+		s2.setS_name("Servlets");
+		s2.setS_rating(5);
+		
+		Skills s3 = new Skills();
+		
+		s3.setS_name("Hibernate");
+		s3.setS_rating(3);
+		
+		List<Skills> list = new ArrayList<>();
+		
+		list.add(s1);
+		list.add(s2);
+		list.add(s3);
+		
+		Student std = new Student();
+		
+		std.setStd_name("Pant");
+		std.setStd_college("PIT");
+		std.setSkills(list);
+		
+		session.persist(s1);
+		session.persist(s2);
+		session.persist(s3);
+		session.persist(std);
+		
+		t.commit();
+		//t.rollback();
+		
+		System.out.println("Done.");
+		
+		session.close();
+	}
+}

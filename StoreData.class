@@ -1,0 +1,72 @@
+package com.test;
+
+import java.util.List;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderColumn;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "student")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	
+	private String std_name;
+	
+	private String std_college;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "s_id")
+	@OrderColumn(name = "type")
+	private List<Skills> skills;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getStd_name() {
+		return std_name;
+	}
+
+	public void setStd_name(String std_name) {
+		this.std_name = std_name;
+	}
+
+	public String getStd_college() {
+		return std_college;
+	}
+
+	public void setStd_college(String std_college) {
+		this.std_college = std_college;
+	}
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
+	}
+	
+	
+}
